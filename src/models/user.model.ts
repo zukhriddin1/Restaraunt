@@ -6,6 +6,7 @@ export interface Iuser {
   phone: string;
   address: string;
   password: string;
+  photoURL: string;
   latLeng: {
     type: string;
     coordinates: [number, number];
@@ -22,6 +23,7 @@ const userSchema = new Schema<Iuser>(
     phone: String,
     address: String,
     password: String,
+    photoURL: String,
     latLeng: {
       type: {
         type: String,

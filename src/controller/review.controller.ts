@@ -1,8 +1,8 @@
 import { customRequest } from "./../middleware/auth";
 import { Request, Response } from "express";
 import reviewModel from "../models/review.model";
+import ReservationModel from "../models/reservation.model";
 import userModel from "../models/user.model";
-import reservationModel from "../models/reservation.model";
 
 export const getReviews = async (req: Request, res: Response) => {
   try {
@@ -17,7 +17,7 @@ export const getReviews = async (req: Request, res: Response) => {
 export const createReview = async (req: Request, res: Response) => {
   try {
     const user_id = (req as customRequest).userId;
-    const oneReserve = await reservationModel.findOne({
+    const oneReserve = await ReservationModel.findOne({
       user_id,
       restaurant_id: req.body.restaurant_id,
     });
