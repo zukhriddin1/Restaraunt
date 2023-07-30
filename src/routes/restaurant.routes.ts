@@ -1,15 +1,24 @@
-import express from "express";
 import {
+  createMenuItem,
   createRestaurant,
+  deleteMenuItem,
   deleteRestaurant,
-  getRestaurant,
+  getRestaurants,
+  updateMenuItem,
   updateRestaurant,
-} from "../controllers/restaurant.controller";
-const restaurantRoutes = express.Router();
+} from "../controller/restaurant.controller";
+import express from "express";
 
-restaurantRoutes.get("/", getRestaurant);
-restaurantRoutes.post("/", createRestaurant);
-restaurantRoutes.patch("/:id", updateRestaurant);
-restaurantRoutes.delete("/:id", deleteRestaurant);
+const restaurantRouter = express.Router();
 
-export default restaurantRoutes;
+restaurantRouter.get("/", getRestaurants);
+restaurantRouter.post("/", createRestaurant);
+restaurantRouter.patch("/:id", updateRestaurant);
+restaurantRouter.delete("/:id", deleteRestaurant);
+
+// for menu
+restaurantRouter.post("/:restaurantId/menu/", createMenuItem);
+restaurantRouter.patch("/:restaurantId/menu/:menuId", updateMenuItem);
+restaurantRouter.delete("/:restaurantId/menu/:menuId", deleteMenuItem);
+
+export default restaurantRouter;
