@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import restaurantModel from "../models/restaurant.model";
+import base64Photos from "../utils/base64Photos";
 
 export const getRestaurants = async (req: Request, res: Response) => {
   try {
@@ -12,9 +13,38 @@ export const getRestaurants = async (req: Request, res: Response) => {
   }
 };
 
+interface Ifile {
+  path: string;
+}
+
 export const createRestaurant = async (req: Request, res: Response) => {
   try {
-    const restaurant = await restaurantModel.create(req.body);
+    const { photos, title, desc, open_time, close_time, location, status } =
+      req.body;
+    const photo_paths = [];
+    if (photos) {
+      for (let i = 0; i < photos.length; i++) {
+        const path = await base64Photos(photos[i]);
+        photo_paths.push(path);
+      }
+    }
+    const new_rest = {
+      title,
+      desc,
+      open_time,
+      close_time,
+      photos: photo_paths,
+      status,
+      latLng: {
+        type: "Point",
+        coordinates: location
+          ?.trim()
+          .replace(/ /g, "")
+          .split(",")
+          .map((coord: any) => parseFloat(coord)),
+      },
+    };
+    const restaurant = await restaurantModel.create(new_rest);
     res.json(restaurant);
   } catch (error: any) {
     res.status(400).send({

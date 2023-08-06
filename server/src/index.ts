@@ -2,7 +2,7 @@ import app from "./app";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 1993;
 async function runServer() {
   try {
     await mongoose.connect(process.env.MONGO_URI as string);

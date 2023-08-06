@@ -13,6 +13,7 @@ export interface IRestaurant {
   close_time: string;
   photos: string[];
   rating: number;
+  status: boolean;
   address: string;
   latLng: {
     type: string;
@@ -30,6 +31,7 @@ const restaurantSchema = new Schema<IRestaurant>(
     open_time: String,
     close_time: String,
     rating: Number,
+    status: Boolean,
     address: String,
     photos: [String],
     latLng: {

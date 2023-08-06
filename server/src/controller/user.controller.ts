@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import userModel from "../models/user.model";
-
 export async function login(req: Request, res: Response) {
   try {
     const user = await userModel.findOne({
